@@ -35,7 +35,7 @@ function ListDetails(props) {
         <div
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className={`rounded-b border max-h-64 bg-slate-50 shadow-md list-details list-${id} w-80 flex justify-between p-3 flex-col`}
+          className={`rounded-b border max-h-72 overflow-auto bg-slate-50 shadow-md list-details list-${id} w-80 flex justify-between p-3 flex-col`}
         >
           {isEditing ? (
             <EditList
@@ -76,7 +76,7 @@ function ListDetails(props) {
               </div>
             </div>
           )}
-          <div className="cards overflow-y-auto max-h-64">
+          <div className="cards overflow-y-auto flex-col flex flex-auto">
             {cards.length > 0 &&
               cards.map((el, index) => {
                 return (
