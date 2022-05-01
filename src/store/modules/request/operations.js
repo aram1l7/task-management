@@ -1,6 +1,7 @@
 import * as actions from "./actions";
 
 export const requestHelper = async (dispatch, requestName, request) => {
+  console.log(requestName);
   dispatch(actions.requestStarted(requestName));
   try {
     await request();

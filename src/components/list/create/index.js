@@ -8,7 +8,7 @@ import { checkAlphaNumericNotEmpty } from "helpers/alphanumericCheck";
 import { connect } from "react-redux";
 import { createNewList } from "store/modules/list/operations";
 import { namedRequestsInProgress } from "store/modules/request/selectors";
-import { RequestsEnum } from "store/modules/requestsEnum";
+import { requestsEnum } from "store/modules/requestsEnum";
 
 class CreateList extends Component {
   constructor(props) {
@@ -126,7 +126,7 @@ class CreateList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isLoading: namedRequestsInProgress(state, RequestsEnum.createList),
+  isLoading: namedRequestsInProgress(state, requestsEnum().createList),
 });
 
 const mapDispatchToProps = (dispatch) => {
