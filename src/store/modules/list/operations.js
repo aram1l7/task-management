@@ -1,27 +1,23 @@
 import * as actions from "./actions";
 import sleep from "helpers/sleep";
 import toast from "helpers/toast";
-export const createNewList = (data) => {
-  return async (dispatch) => {
-    dispatch(actions.createListStart());
-    try {
-      await sleep();
-      dispatch(actions.createListCompleted(data));
-      toast.success("List successfully created");
-    } catch (error) {
-      toast.error("Something went wrong");
-      console.error(error);
-    }
-  };
+import { RequestsEnum } from "../requestsEnum";
+import { requestHelper } from "../request/operations";
+
+export const createNewList = (data) => async (dispatch) => {
+  return await requestHelper(dispatch, RequestsEnum.createList, async () => {
+    await sleep();
+    dispatch(actions.createListCompleted(data));
+    toast.success("List was successfully created!");
+  });
 };
 
 export const editListOperation = (data) => {
   return async (dispatch) => {
-    dispatch(actions.editListStart());
     try {
       await sleep();
       dispatch(actions.editListCompleted(data));
-      toast.success("Title was successfully edited");
+      toast.success("Title was successfully edited!");
     } catch (error) {
       toast.error("Something went wrong");
       console.error(error);
@@ -31,7 +27,6 @@ export const editListOperation = (data) => {
 
 export const deleteListOperation = (id) => {
   return async (dispatch) => {
-    dispatch(actions.deleteListStart());
     try {
       await sleep();
       dispatch(actions.deleteListCompleted(id));
@@ -45,7 +40,6 @@ export const deleteListOperation = (id) => {
 
 export const createNewCardOperation = (data) => {
   return async (dispatch) => {
-    dispatch(actions.createCardStart());
     try {
       await sleep();
       dispatch(actions.createCardCompleted(data));
@@ -57,10 +51,8 @@ export const createNewCardOperation = (data) => {
   };
 };
 
-
 export const deleteCardOperation = (data) => {
   return async (dispatch) => {
-    dispatch(actions.deleteCardStart());
     try {
       await sleep();
       dispatch(actions.deleteCardCompleted(data));
@@ -74,7 +66,6 @@ export const deleteCardOperation = (data) => {
 
 export const editCardOperation = (data) => {
   return async (dispatch) => {
-    dispatch(actions.editCardStart());
     try {
       await sleep();
       dispatch(actions.editCardCompleted(data));
