@@ -45,55 +45,54 @@ function ListDetails(props) {
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          className={`rounded-b border max-h-screen relative bg-slate-50 shadow-md list-details list-${id} w-80 flex justify-between p-3 flex-col`}
           ref={provided.innerRef}
         >
+          <div className="header sticky">
+            {isEditing ? (
+              <EditList
+                id={id}
+                saveEdit={() => setIsEditing(false)}
+                title={title}
+              />
+            ) : (
+              <div className="flex justify-between sticky">
+                <h3 className="text-lg font-semibold">{title}</h3>
+                <div className="flex">
+                  <IconButton
+                    color="primary"
+                    size="small"
+                    onClick={() => setIsEditing(true)}
+                    aria-label="edit"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  {isFetching ? (
+                    <LoadingButton
+                      loading
+                      loadingPosition="center"
+                      startIcon={<SaveIcon />}
+                      variant="text"
+                      size="small"
+                    />
+                  ) : (
+                    <IconButton
+                      onClick={() => dispatch(deleteListOperation(id))}
+                      color="error"
+                      size="small"
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
           <Droppable droppableId={id}>
             {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className={`rounded-b border max-h-content overflow-auto bg-slate-50 shadow-md list-details list-${id} w-80 flex justify-between p-3 flex-col`}
-              >
-                {isEditing ? (
-                  <EditList
-                    id={id}
-                    saveEdit={() => setIsEditing(false)}
-                    title={title}
-                  />
-                ) : (
-                  <div className="flex justify-between sticky">
-                    <h3 className="text-lg font-semibold">{title}</h3>
-                    <div className="flex">
-                      <IconButton
-                        color="primary"
-                        size="small"
-                        onClick={() => setIsEditing(true)}
-                        aria-label="edit"
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      {isFetching ? (
-                        <LoadingButton
-                          loading
-                          loadingPosition="center"
-                          startIcon={<SaveIcon />}
-                          variant="text"
-                          size="small"
-                        />
-                      ) : (
-                        <IconButton
-                          onClick={() => dispatch(deleteListOperation(id))}
-                          color="error"
-                          size="small"
-                          aria-label="delete"
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      )}
-                    </div>
-                  </div>
-                )}
-                <div className="cards overflow-y-auto flex-col flex flex-auto">
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                <div className="cards min-h-4 max-h-50 overflow-y-auto flex-col flex flex-auto">
                   {cards.length > 0 &&
                     cards.map((el, index) => {
                       return (
@@ -108,30 +107,32 @@ function ListDetails(props) {
                       );
                     })}
                 </div>
-                <div ref={componentRef} className="mt-4">
-                  {addNewCardOpen ? (
-                    <CreateCard
-                      id={id}
-                      onSave={() => setAddNewCardOpen(false)}
-                    />
-                  ) : (
-                    <Button
-                      className={`add-btn-${id}`}
-                      startIcon={<AddSharpIcon />}
-                      onClick={(e) => {
-                        setAddNewCardOpen(true);
-                      }}
-                      variant="text"
-                      color="primary"
-                    >
-                      Add new card
-                    </Button>
-                  )}
-                </div>
+
                 {provided.placeholder}
               </div>
             )}
           </Droppable>
+
+          <div
+            ref={componentRef}
+            className={`${cards.length > 0 ? "mt-4" : ""}`}
+          >
+            {addNewCardOpen ? (
+              <CreateCard id={id} onSave={() => setAddNewCardOpen(false)} />
+            ) : (
+              <Button
+                className={`add-btn-${id}`}
+                startIcon={<AddSharpIcon />}
+                onClick={(e) => {
+                  setAddNewCardOpen(true);
+                }}
+                variant="text"
+                color="primary"
+              >
+                Add new card
+              </Button>
+            )}
+          </div>
         </div>
       )}
     </Draggable>
