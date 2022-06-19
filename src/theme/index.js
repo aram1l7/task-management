@@ -52,5 +52,23 @@ export const dark = {
         },
       },
     },
+    MuiLoadingButton: {
+      styleOverrides: {
+        root: {
+          color: "#fff",
+          backgroundColor: "#2e2e2e",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          "&.Mui-disabled": {
+            color: "#fff",
+            backgroundColor: "rgb(0 0 0 / 37%)",
+          },
+        },
+      },
+    },
   },
 };
